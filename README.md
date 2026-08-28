@@ -14,7 +14,7 @@ and ⌘K exactly like a built-in.
 
 | File | Role |
 |---|---|
-| `dark-studio/plugin.js` | The whole theme — one editable `V` table at the top, every hex annotated with its OBS origin (`Dark_Studio.obt` CSS var) and the element it paints. Register the theme + two ⌘K commands (apply, copy palette JSON). |
+| `dark-studio/plugin.js` | The whole theme — one editable `V` table at the top, every hex annotated with its OBS origin (`Dark_Studio.obt` CSS var) and the element it paints. Registers the theme + two ⌘K commands (apply, copy palette JSON) + the OBS maroon composer field and red typed-text (scoped CSS; no theme token reaches that element). |
 | `dark-studio/install.ps1` | One-shot install onto a Windows machine running the desktop app. |
 
 ## Install
@@ -54,7 +54,11 @@ To map a detail you want:
 - Your message bubbles: `bubble`, `bubbleBorder`
 - Sidebar: `sidebar`, `sidebar`-derived + `border`
 - Menus/dropdowns: `popover`, `popoverForeground`
-- Errors/Stop: `danger`; statuses: `success` / `warning`
+- Errors/Stop: `danger` (there is no standalone status token in the theme model —
+  status colors live in the terminal `ANSI` block only)
+- The composer field you type in: `composerField` (maroon `--input_bg`) and
+  `composerText` (red `--input_text`) — applied by scoped CSS to the composer
+  only, so it never tints other themes or other input fields
 - Terminal pane only: the `ANSI` block (the OBS ramps verbatim)
 
 Every new hex: keep `#RRGGBB` form. The app derives secondary/accent tints,
