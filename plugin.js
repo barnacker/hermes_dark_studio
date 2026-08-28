@@ -85,10 +85,10 @@ const V = {
   composerText: '#DB0000',  // --input_text (red)
 
   // Font — OBS uses IosevkaTerm Nerd Font for everything. Missing locally it
-  // falls back; install for the true look:
-  //   download IosevkaTerm (nerdfonts.com) → ~/.local/share/fonts, fc-cache -r
-  font: '"Iosevka Term", "Iosevka", "SF Mono", Menlo, system-ui, sans-serif',
-  fontMono: '"Iosevka Term", "Iosevka", Menlo, "Courier New", monospace',
+  // falls back; install for the true look (nerdfonts.com → IosevkaTerm: Run
+  // the installer on Windows, ~/.local/share/fonts + fc-cache -r elsewhere):
+  font: '"IosevkaTerm Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
+  fontMono: '"IosevkaTerm Nerd Font Mono", Menlo, "Courier New", monospace',
 }
 
 // ─── Terminal ANSI — the OBS ramps used verbatim (middle ramp normal,
