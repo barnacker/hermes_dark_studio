@@ -14,8 +14,8 @@ and ⌘K exactly like a built-in.
 
 | File | Role |
 |---|---|
-| `dark-studio/plugin.js` | The whole theme — one editable `V` table at the top, every hex annotated with its OBS origin (`Dark_Studio.obt` CSS var) and the element it paints. Registers the theme + two ⌘K commands (apply, copy palette JSON) + the OBS maroon composer field and red typed-text (scoped CSS; no theme token reaches that element). |
-| `dark-studio/install.ps1` | One-shot install onto a Windows machine running the desktop app. |
+| `plugin.js` | The whole theme — one editable `V` table at the top, every hex annotated with its OBS origin (`Dark_Studio.obt` CSS var) and the element it paints. Registers the theme + two ⌘K commands (apply, copy palette JSON) + the OBS maroon composer field and red typed-text (scoped CSS; no theme token reaches that element). |
+| `install.ps1` | One-shot install onto a Windows machine running the desktop app. |
 
 ## Install
 
@@ -55,11 +55,13 @@ hermes://plugin-desktop/install?repo=barnacker/hermes_dark_studio&force=true
 
 ```powershell
 git clone https://github.com/barnacker/hermes_dark_studio
-.\hermes_dark_studio\dark-studio\install.ps1
+.\hermes_dark_studio\install.ps1
 ```
 
-**Or manually, any OS** — copy the plugin folder (name must stay `dark-studio`)
-into the desktop app's home. That home is `$HERMES_HOME` if set, else
+**Or manually, any OS** — copy the repo's `plugin.js` into a folder named
+`hermes_dark_studio` inside the desktop app's `desktop-plugins` dir
+(`<home>\desktop-plugins\hermes_dark_studio\plugin.js`). That home is
+`$HERMES_HOME` if set, else
 `%LOCALAPPDATA%\hermes` on Windows (the documented default), else
 `~/.hermes` on macOS/Linux. The app's **Settings → Plugins** shows the exact
 folder it loads plugins from — that answer wins if it differs.
@@ -75,7 +77,7 @@ the app's look always lives with the app.
 
 ## Editing
 
-Open `dark-studio/plugin.js`, change a value in the `V` table, save. The app
+Open `plugin.js`, change a value in the `V` table, save. The app
 hot-reloads the plugin; run the ⌘K apply command again to re-apply.
 
 To map a detail you want:

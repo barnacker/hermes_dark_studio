@@ -28,9 +28,9 @@ if ($env:HERMES_HOME) {
 }
 
 if ($Profile) {
-    $destDir = Join-Path $hermesHome "profiles\$Profile\desktop-plugins\dark-studio"
+    $destDir = Join-Path $hermesHome "profiles\$Profile\desktop-plugins\hermes_dark_studio"
 } else {
-    $destDir = Join-Path $hermesHome 'desktop-plugins\dark-studio'
+    $destDir = Join-Path $hermesHome 'desktop-plugins\hermes_dark_studio'
 }
 
 New-Item -ItemType Directory -Force -Path $destDir | Out-Null
