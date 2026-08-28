@@ -19,7 +19,39 @@ and ⌘K exactly like a built-in.
 
 ## Install
 
-**Windows (the usual case):**
+**One click — from your browser, in two steps:**
+
+1. Open [https://github.com/barnacker/hermes_dark_studio/tree/master](https://github.com/barnacker/hermes_dark_studio/tree/master) in any browser (logged into the Hermes app on that machine or not — either works).
+2. Click the **[Install Dark Studio in the Hermes desktop app](hermes://plugin-desktop/install?repo=barnacker/hermes_dark_studio&force=true)** link below.
+
+**[Install Dark Studio in the Hermes desktop app](hermes://plugin-desktop/install?repo=barnacker/hermes_dark_studio&force=true)**
+
+That opens the app and its **Install plugin** modal, which probes the
+repository, shows what it will install, and puts it in the app's desktop-plugins
+folder. 🛡 **You're asked to confirm before anything runs — only do that if you
+trust this repository** (verify the repo/author on the GitHub page first).
+
+- **To UPDATE later:** click the same link again — it carries `force=true`, so
+  the modal force-reinstalls from `master` and the plugin hot-reloads. It's the
+  update button.
+- Browsers may block `hermes://` auto-navigation from a click; if the app
+  doesn't open, right-click/copy the link and open it in the OS address bar.
+- The app must be **installed** (develop runs don't claim the protocol
+  handler). No app version requirement — the deep-link/force-reinstall doors
+  this link uses exist in the current desktop builds.
+
+**The link itself** (what it is, verified against the app's deep-link parser):
+
+```
+hermes://plugin-desktop/install?repo=barnacker/hermes_dark_studio&force=true
+```
+
+- `plugin-desktop` = desktop-plugin half only (this repo ships no agent/Python
+  half, so the modal's desktop-box auto-checks and the agent-box auto-disables)
+- `force=true` = replace the existing install instead of refusing (the updater)
+- The modal shows **"View repository"** — review before installing.
+
+**Or the classic way — `git clone` + installer (any OS):**
 
 ```powershell
 git clone https://github.com/barnacker/hermes_dark_studio
