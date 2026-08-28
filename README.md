@@ -26,14 +26,11 @@ git clone https://github.com/barnacker/hermes_dark_studio
 .\hermes_dark_studio\dark-studio\install.ps1
 ```
 
-**Or manually, any OS** — copy the folder matching the plugin id into the
-desktop app's home:
-
-```bash
-mkdir -p ~/.hermes/desktop-plugins/dark-studio
-cp dark-studio/plugin.js ~/.hermes/desktop-plugins/dark-studio/
-# macOS/Linux: if HERMES_HOME is set, copy there instead
-```
+**Or manually, any OS** — copy the plugin folder (name must stay `dark-studio`)
+into the desktop app's home. That home is `$HERMES_HOME` if set, else
+`%LOCALAPPDATA%\hermes` on Windows (the documented default), else
+`~/.hermes` on macOS/Linux. The app's **Settings → Plugins** shows the exact
+folder it loads plugins from — that answer wins if it differs.
 
 Then in the app:
 
