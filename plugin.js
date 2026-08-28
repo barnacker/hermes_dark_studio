@@ -33,9 +33,8 @@
  *       #db0000           →   ring / midground /      →   focus ring, selection,
  *                                composerRing             streaming cursor
  *   --input_text #db0000  →   destructive             →   Stop / error actions
- *   --input_bg #170700    →   scoped: --composer-fill →   composer field ONLY,
+ *   --input_bg #170700    →   scoped: --composer-fill →   composer field ONLY
  *   --input_text #db0000  →   scoped: composer text   →   your typed text ONLY
- *                              and inline-code chip
  *   --button_bg #0d1a32   →   scoped: button bg       →   filled buttons (default
  *                          + secondary)
  *   --button_bg_hover
@@ -288,7 +287,6 @@ const NAV_PANEL_CSS = `
 // the un-highlighted fallback text inherits from the pre.
 const CODE_CSS = `
   [data-slot='aui_assistant-message-content'] .aui-md :not(pre) > code {
-    background: ${V.composerField} !important;
     color: ${V.accent} !important;
   }
   [data-slot='aui_assistant-message-content'] .aui-md pre,
