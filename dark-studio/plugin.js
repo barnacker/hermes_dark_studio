@@ -14,8 +14,7 @@
  *   .obt var            →   DesktopTheme key          →   what it paints
  *   ─────────────────────────────────────────────────────────────────────────
  *   --bg_window #00040b →   background                →   app base
- *   --text_light
- *       (#d6d6d6)         →   foreground /            →   all body text,
+ *   --text #ff8300      →   foreground /            →   all body text,
  *                                cardForeground          incl. my output
  *   --yellow3 #B88A16
  *       (warmed)          →   mutedForeground         →   secondary/dim,
@@ -61,7 +60,7 @@ const V = {
   sidebar: '#04030A',      // bg deepened ~5% — the working rail
 
   // Text ladder
-  foreground: '#D6D6D6',   // --text_light (white3) — body + typed-in baseline
+  foreground: '#FF8300',   // --text (OBS label/output amber) — all body text
   secondaryText: '#A06222', // warm dim (--yellow3 warmed) — secondary, placeholder
 
   // Structure
