@@ -16,7 +16,9 @@
  *
  *   palette var         →   DesktopTheme key          →   what it paints
  *   ─────────────────────────────────────────────────────────────────────────
- *   --bg_window #00040b →   background                →   app base
+ *   --bg_window           →   background                →   app base  (swapped
+ *       #04030a (sidebar)                              →   with sidebar)
+ *   (was #00040b)        →   sidebar                   →   working rail
  *   --text #ff8300      →   foreground /            →   all body text,
  *                                cardForeground          incl. my output
  *   --yellow3 #B88A16
@@ -73,11 +75,11 @@ const LABEL = 'Dark Studio'
 const V = {
   // Surface ladder (dark). base → raised → floating. Kept near-black; the warm
   // identity comes from borders + the composer, not from every card.
-  background: '#00040B',   // --bg_window
+  background: '#04030A',   // swapped from sidebar — main chat field
   card: '#0A0806',         // warm near-black, lifted from bg — raised surfaces
   muted: '#141109',        // hover tints, disabled fills (warm)
   popover: '#12100B',      // grey8, warm — menus, dropdowns, popovers
-  sidebar: '#04030A',      // bg deepened ~5% — the working rail
+  sidebar: '#00040B',     // swapped from background — the working rail
 
   // Text ladder
   foreground: '#FF8300',   // --text (label/output amber) — all body text
