@@ -35,6 +35,8 @@
  *   --input_text #db0000  →   destructive             →   Stop / error actions
  *   --input_bg #170700    →   scoped: --composer-fill →   composer field ONLY
  *   --input_text #db0000  →   scoped: composer text   →   your typed text ONLY
+ *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
+ *                                   moving streak (SHIMMER_CSS)
  *   --button_bg #0d1a32   →   scoped: button bg       →   filled buttons (default
  *                          + secondary)
  *   --button_bg_hover
@@ -92,8 +94,8 @@ const V = {
   // Semantic
   danger: '#DB0000',       // --input_text red, same as accent — Stop / error actions
 
-  // User message bubble — --primary / --blue4 (selection)
-  bubble: '#13284B',
+  // User message bubble — warm brown, raised surface
+  bubble: '#300F00',
   bubbleBorder: '#213E97',
 
   // Composer field — the input pair. These are the two values a theme token
@@ -295,6 +297,18 @@ const CODE_CSS = `
   }
 `
 
+// Thinking indicator: the amber "shimmer" streak the user reads as yellow is
+// the tw-shimmer lib lightening currentColor (~40%) into a gold streak. Its
+// own knob --shimmer-color drives the moving streak; setting it white leaves
+// motion params and every other shimmer consumer untouched. Verified:
+// message-parts.tsx:233 (label span gets .shimmer only while pending, inside
+// the data-slot='aui_thinking-disclosure' container).
+const SHIMMER_CSS = `
+  [data-slot='aui_thinking-disclosure'] {
+    --shimmer-color: #FFFFFF;
+  }
+`
+
 function injectComposerCss() {
   if (typeof document === 'undefined') return
   // A stale <style> from an earlier build — drop it so only the new one remains
@@ -308,7 +322,7 @@ function injectComposerCss() {
   }
   // Idempotent — hot reload re-runs register; rewrite the rules in place.
   style.textContent =
-    COMPOSER_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS
+    COMPOSER_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
