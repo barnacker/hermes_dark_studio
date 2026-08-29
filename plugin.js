@@ -75,11 +75,11 @@ const LABEL = 'Dark Studio'
 const V = {
   // Surface ladder (dark). base → raised → floating. Kept near-black; the warm
   // identity comes from borders + the composer, not from every card.
-  background: '#04030A',   // swapped from sidebar — main chat field
+  background: '#00040B',   // the chat field (darkest surface)
   card: '#0A0806',         // warm near-black, lifted from bg — raised surfaces
   muted: '#141109',        // hover tints, disabled fills (warm)
   popover: '#12100B',      // grey8, warm — menus, dropdowns, popovers
-  sidebar: '#00040B',     // swapped from background — the working rail
+  sidebar: '#0A0806',      // = card (warm lift) — rail reads lighter than chat
 
   // Text ladder
   foreground: '#FF8300',   // --text (label/output amber) — all body text
