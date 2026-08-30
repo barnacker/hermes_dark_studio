@@ -44,6 +44,10 @@
  *                                   pill (ghost button)
  *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
  *                                   moving streak (SHIMMER_CSS)
+ *   (popover #12100b)     →   scoped: --popover-      →   coachmark tip
+ *                                surface (TIP_CSS)          bubble surface +
+ *                                                           arrow (was full
+ *                                                           accent red)
  *   --button_bg #0d1a32   →   scoped: button bg       →   filled buttons (default
  *                          + secondary)
  *   --button_bg_hover
@@ -330,7 +334,7 @@ const SHIMMER_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260830-1'
+const DS_BUILD = '20260830-2'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -372,6 +376,21 @@ const MODEL_PILL_CSS = `
   }
 `
 
+// The "coachmark" tip bubble (e.g. "Work that runs itself" on the Scheduled
+// jobs row) is the app's one variant="accent" popover: both the box and its
+// arrow fill from --popover-surface, which that variant points at
+// var(--dt-primary-solid) = the full accent — a saturated, full-strength red.
+// Those get re-routed to the warm popover surface (still one variable the
+// accent-based text/arrow read, so the tip stays legible and reads as a
+// quiet callout instead of a red brick). One element scope, one variable —
+// no other surface (menu, dropdown, composer) is affected, and the shared
+// accent token (ring/selection/cursor) is unchanged.
+const TIP_CSS = `
+  [data-slot='tip-bubble'] {
+    --popover-surface: ${V.popover} !important;
+  }
+`
+
 function injectComposerCss() {
   if (typeof document === 'undefined') return
   // A stale <style> from an earlier build — drop it so only the new one remains
@@ -388,7 +407,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
