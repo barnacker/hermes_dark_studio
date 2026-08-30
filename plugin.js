@@ -37,6 +37,8 @@
  *   --input_text #db0000  →   destructive             →   Stop / error actions
  *   --input_bg #170700    →   scoped: --composer-fill →   composer field ONLY
  *   --input_text #db0000  →   scoped: composer text   →   your typed text ONLY
+ *   --input_bg #170700    →   scoped: [data-slot='input']/      →   settings + numeric
+ *   --input_text #db0000      'input-group' fill + text           fields (same pair)
  *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
  *                                   moving streak (SHIMMER_CSS)
  *   --button_bg #0d1a32   →   scoped: button bg       →   filled buttons (default
@@ -311,6 +313,24 @@ const SHIMMER_CSS = `
   }
 `
 
+// Settings + numeric fields (data-slot='input' / 'input-group' — the generic
+// Input and its prefix/suffix wrapper, all schema.type='number' fields
+// included) ride the shared .desktop-input-chrome — a fill mixed from the
+// global `card` token, text the app-wide foreground. To match the composer
+// field: the maroon `--input_bg` as the solid field fill and the red
+// `--input_text` as the typed text, the same pair as the composer above.
+// `!important` beats the foreground stamp, scoped to these slots so no other
+// theme's inputs or the app's other fields are affected.
+const INPUT_CSS = `
+  [data-slot='input'],
+  [data-slot='input-group'] {
+    background: ${V.composerField} !important;
+  }
+  [data-slot='input'] {
+    color: ${V.composerText} !important;
+  }
+`
+
 function injectComposerCss() {
   if (typeof document === 'undefined') return
   // A stale <style> from an earlier build — drop it so only the new one remains
@@ -324,7 +344,7 @@ function injectComposerCss() {
   }
   // Idempotent — hot reload re-runs register; rewrite the rules in place.
   style.textContent =
-    COMPOSER_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
+    COMPOSER_CSS + INPUT_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
