@@ -326,6 +326,12 @@ const SHIMMER_CSS = `
 // pair as the composer above. `!important` beats the foreground stamp, scoped
 // to these slots so no other theme's inputs or the app's other fields are
 // affected.
+// Build stamp — re-injected CSS is indistinguishable across versions
+// otherwise (styles identical on familiarity, only the build ID differs).
+// Keep in sync on every change that makes a "is my change live?" question
+// unanswerable.
+const DS_BUILD = '20260830-1'
+
 const INPUT_CSS = `
   [data-slot='input'],
   [data-slot='input-group'],
@@ -336,6 +342,15 @@ const INPUT_CSS = `
   [data-slot='input'],
   [data-slot='select-trigger'],
   [data-slot='searchable-select-trigger'] {
+    color: ${V.composerText} !important;
+  }
+  /* Legacy fallback: an older packaged renderer without the data-slot
+     markers still paints select triggers with .desktop-input-chrome +
+     Radix data-state — catch the same pair there so it works on the first
+     commit, no holdout. The current main's data-slot rules win on
+     specificity; this is belt only. */
+  [class*='desktop-input-chrome'][data-state] {
+    background: ${V.composerField} !important;
     color: ${V.composerText} !important;
   }
 `
@@ -369,7 +384,10 @@ function injectComposerCss() {
     document.head.appendChild(style)
   }
   // Idempotent — hot reload re-runs register; rewrite the rules in place.
+  // Build stamp first: one grep in devtools answers "is this the current
+  // file?" without reading through every rule.
   style.textContent =
+    `/* dark-studio build ${DS_BUILD} */\n` +
     COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
 }
 
