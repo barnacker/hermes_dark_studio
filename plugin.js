@@ -44,7 +44,7 @@
  *                                   pill (ghost button)
  *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
  *                                   moving streak (SHIMMER_CSS)
- *   (popover #12100b)     →   scoped: --popover-      →   coachmark tip
+ *   --input_bg #170700    →   scoped: --popover-      →   coachmark tip
  *                                surface (TIP_CSS)          bubble surface +
  *                                                           arrow (was full
  *                                                           accent red)
@@ -334,7 +334,7 @@ const SHIMMER_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260830-2'
+const DS_BUILD = '20260830-3'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -387,7 +387,7 @@ const MODEL_PILL_CSS = `
 // accent token (ring/selection/cursor) is unchanged.
 const TIP_CSS = `
   [data-slot='tip-bubble'] {
-    --popover-surface: ${V.popover} !important;
+    --popover-surface: ${V.composerField} !important;
   }
 `
 
