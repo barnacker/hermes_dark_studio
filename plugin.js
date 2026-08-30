@@ -38,8 +38,10 @@
  *   --input_bg #170700    →   scoped: --composer-fill →   composer field ONLY
  *   --input_text #db0000  →   scoped: composer text   →   your typed text ONLY
  *   --input_bg #170700    →   scoped: [data-slot='input']/      →   settings + numeric
- *   --input_text #db0000      'input-group'/'select-trigger'    fields + selection
- *                                   fill + text                 boxes (same pair)
+ *   --input_text #db0000      'input-group'/'select-trigger'/   fields + selection
+ *                               'searchable-select-trigger'     boxes (same pair);
+ *                                   fill + text                 the composer model
+ *                                   pill (ghost button)
  *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
  *                                   moving streak (SHIMMER_CSS)
  *   --button_bg #0d1a32   →   scoped: button bg       →   filled buttons (default
@@ -327,11 +329,30 @@ const SHIMMER_CSS = `
 const INPUT_CSS = `
   [data-slot='input'],
   [data-slot='input-group'],
-  [data-slot='select-trigger'] {
+  [data-slot='select-trigger'],
+  [data-slot='searchable-select-trigger'] {
     background: ${V.composerField} !important;
   }
   [data-slot='input'],
-  [data-slot='select-trigger'] {
+  [data-slot='select-trigger'],
+  [data-slot='searchable-select-trigger'] {
+    color: ${V.composerText} !important;
+  }
+`
+
+// The composer model selector — the one text-bearing control in the control
+// row that is NOT an input. It is a ghost Button (variant="ghost":
+// transparent, dim text), so none of the input rules reach it. The stable
+// hook: the pill is the only ghost button carrying the .max-w-40 class (it
+// is the only control in the row that can give width back) — the icon
+// buttons (dictate, auto-speak, wake word, voice menu, queue) are square and
+// stay untouched. data-tour='model-pill' is added where present (primary
+// chat only); the class selector also covers the side-by-side tiles. Same
+// pair as the composer field.
+const MODEL_PILL_CSS = `
+  [data-slot='button'][data-variant='ghost'].max-w-40,
+  [data-tour='model-pill'] {
+    background-color: ${V.composerField} !important;
     color: ${V.composerText} !important;
   }
 `
@@ -349,7 +370,7 @@ function injectComposerCss() {
   }
   // Idempotent — hot reload re-runs register; rewrite the rules in place.
   style.textContent =
-    COMPOSER_CSS + INPUT_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
