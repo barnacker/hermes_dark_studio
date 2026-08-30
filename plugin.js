@@ -38,7 +38,8 @@
  *   --input_bg #170700    →   scoped: --composer-fill →   composer field ONLY
  *   --input_text #db0000  →   scoped: composer text   →   your typed text ONLY
  *   --input_bg #170700    →   scoped: [data-slot='input']/      →   settings + numeric
- *   --input_text #db0000      'input-group' fill + text           fields (same pair)
+ *   --input_text #db0000      'input-group'/'select-trigger'    fields + selection
+ *                                   fill + text                 boxes (same pair)
  *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
  *                                   moving streak (SHIMMER_CSS)
  *   --button_bg #0d1a32   →   scoped: button bg       →   filled buttons (default
@@ -315,18 +316,22 @@ const SHIMMER_CSS = `
 
 // Settings + numeric fields (data-slot='input' / 'input-group' — the generic
 // Input and its prefix/suffix wrapper, all schema.type='number' fields
-// included) ride the shared .desktop-input-chrome — a fill mixed from the
-// global `card` token, text the app-wide foreground. To match the composer
-// field: the maroon `--input_bg` as the solid field fill and the red
-// `--input_text` as the typed text, the same pair as the composer above.
-// `!important` beats the foreground stamp, scoped to these slots so no other
-// theme's inputs or the app's other fields are affected.
+// included, plus data-slot='select-trigger' — the selection boxes: the
+// bare Select controls and the enclosed popper chevron) ride the shared
+// .desktop-input-chrome — a fill mixed from the global `card` token, text the
+// app-wide foreground. To match the composer field: the maroon `--input_bg` as
+// the solid field fill and the red `--input_text` as the typed text, the same
+// pair as the composer above. `!important` beats the foreground stamp, scoped
+// to these slots so no other theme's inputs or the app's other fields are
+// affected.
 const INPUT_CSS = `
   [data-slot='input'],
-  [data-slot='input-group'] {
+  [data-slot='input-group'],
+  [data-slot='select-trigger'] {
     background: ${V.composerField} !important;
   }
-  [data-slot='input'] {
+  [data-slot='input'],
+  [data-slot='select-trigger'] {
     color: ${V.composerText} !important;
   }
 `
