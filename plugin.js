@@ -334,7 +334,7 @@ const SHIMMER_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260830-3'
+const DS_BUILD = '20260901-3'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -418,18 +418,130 @@ if (typeof theme.name !== 'string' || typeof theme.label !== 'string' ||
   console.error(`[dark-studio] theme failed shape check — not registered`)
 }
 
+// ─── Cold-launch fix ─────────────────────────────────────────────────────────
+// The app paints the persisted skin at boot, BEFORE disk plugins load
+// (renderer first, plugins a moment later). A cold start could therefore
+// never resolve a persisted 'dark-studio' — its registry registration hadn
+// happened yet — and the paint silently fell back to the default skin. (The
+// scoped CSS below still applied, because it's injected at load — so a
+// relaunch looked half-themed at first.)
+//
+// Fix: the user-theme store is a plain localStorage record that the boot
+// paint and every theme resolution read synchronously — same keys, same
+// storage the app itself uses (themes/user-themes.ts, USER_THEMES_KEY).
+// That function IS core-only and the plugin SDK exposes no install door, so
+// reproduce the core write exactly here: merge this theme into the existing
+// record, clobbering only our own name. When the user's next (re)launch
+// reads the store, 'dark-studio' resolves on frame 1 — before React even
+// mounts — and the persisted selection finally sticks. The THEMES_AREA
+// registration below still carries the current process (picker listing,
+// live switching).
+//
+// Guardrails (mirror the core install): built-in names can never be shadowed
+// (NAME is stable and not built-in — verified against presets), and the read
+// tolerates a missing/foreign record so a concurrent user upload is never
+// destroyed. If a future app build renames the key, this degrades to
+// registry-only mode: the current session is fine, a cold boot falls back to
+// the old behavior — detected by the self-heal trip below.
+//
+// Self-heal for the migration: persisted selection is 'dark-studio' AND the
+// record had no entry = exactly the bug state (the app is painting the
+// fallback while believing this theme is active). Re-apply the selection
+// right after the register (so the registry check succeeds) — only on the
+// launch where the fix lands; steady-state launches do nothing more.
+const USER_THEMES_KEY = 'hermes-desktop-user-themes-v1'
+const GLOBAL_SKIN_KEY = 'hermes-desktop-theme-v2'
+const PROFILE_SKINS_KEY = 'hermes-desktop-profile-themes-v1'
+
+function readUserThemeRecord() {
+  // null = the stored record exists but is unparseable — a corrupt-record
+  // signal, NOT "empty". Callers must not overwrite a corrupt record with a
+  // partial one (that would drop any other installed themes in it).
+  try {
+    const raw = window.localStorage.getItem(USER_THEMES_KEY)
+    if (!raw) {
+      return {}
+    }
+    const parsed = JSON.parse(raw)
+    return (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) ? parsed : null
+  } catch {
+    return null
+  }
+}
+
+function persistUserThemeAndHeal() {
+  if (typeof window === 'undefined') {
+    return
+  }
+
+  let determineSelfHeal = false
+
+  try {
+    const recordBefore = readUserThemeRecord()
+    const storedBefore = recordBefore ? Object.prototype.hasOwnProperty.call(recordBefore, NAME) : false
+
+    let selection = window.localStorage.getItem(GLOBAL_SKIN_KEY)
+
+    try {
+      const profile = String(
+        host.state && host.state.profile && typeof host.state.profile.get === 'function'
+          ? host.state.profile.get() || ''
+          : ''
+      ).trim() || 'default'
+
+      if (profile !== 'default') {
+        const perProfile = JSON.parse(window.localStorage.getItem(PROFILE_SKINS_KEY) || 'null')
+
+        if (perProfile && typeof perProfile === 'object' && typeof perProfile[profile] === 'string') {
+          selection = perProfile[profile]
+        }
+      }
+    } catch {
+      // per-profile record unreadable — global slot already checked
+    }
+
+    determineSelfHeal = !storedBefore && selection === NAME
+  } catch {
+    // storage sniffing is best-effort; the persist below is the point
+  }
+
+  // The heal is independent of the record write — it resolves the name via
+  // the registry contribution made earlier in this same register — so run it
+  // first: a corrupt record can never block a valid heal.
+  if (determineSelfHeal) {
+    requestTheme(NAME)
+  }
+
+  try {
+    const record = readUserThemeRecord()
+    if (record === null) {
+      console.warn('[dark-studio] user-theme record corrupt — left untouched (non-fatal)')
+      return
+    }
+    record[NAME] = theme
+    window.localStorage.setItem(USER_THEMES_KEY, JSON.stringify(record))
+  } catch (error) {
+    // Non-fatal — the registry registration still serves this process, and
+    // the next load retries the persist.
+    console.warn('[dark-studio] could not persist user theme (non-fatal)', error)
+  }
+}
+
 export default {
   id: ID,
   name: LABEL,
   description: 'Desktop theme from the Dark Studio palette (barnacker/dark_studio)',
   register(ctx) {
-    injectComposerCss()
-
+    // Registry first: the self-heal's requestTheme must be able to resolve
+    // the name through the contribution just made.
     ctx.register({
       id: 'theme',
       area: THEMES_AREA,
       data: theme,
     })
+
+    persistUserThemeAndHeal()
+    injectComposerCss()
 
     ctx.register({
       id: 'apply',
