@@ -63,6 +63,11 @@
  *       #0d1a32           →   scoped: settings active →   Settings section rows
  *                              row fill + border-off   (overlay nav); the
  *                              (NAV_PANEL_CSS)           boxed border is removed
+ *   (installed font)    →   typography.fontSans /   →   UI face: VictorMono NFP
+ *                       + fontMediumWeight          →   (proportional cut);
+ *                              (FONT_CSS, 500)           code face: VictorMono NFM
+ *                                    fontMono; medium →   (tabular cut); all text at
+ *                                    weight across theme →   weight 500
  *
  * To tweak ANY detail: edit the VALUES table below and re-save — the plugin
  * hot-reloads and the ⌘K "Dark Studio" command re-registers the updated
@@ -132,11 +137,13 @@ const V = {
   // (28% of it).
   navSelected: '#0D1A32',   // --button_bg (darker blue of the button pair)
 
-  // Font — Dark Studio uses IosevkaTerm Nerd Font for everything. Missing
-  // locally it falls back; install for the true look (nerdfonts.com →
-  // IosevkaTerm: run the installer):
-  font: '"IosevkaTerm Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
-  fontMono: '"IosevkaTerm Nerd Font Mono", Menlo, "Courier New", monospace',
+  // Font — Victor Mono Nerd Font: the proportional (Propo) cut as the UI face,
+  // the tabular (Mono) cut for code. Both are installed locally in
+  // C:\Windows\Fonts with a full weight ramp (Thin→Black), so explicit
+  // font-weight values resolve to real glyphs (no synthetic bolding).
+  font: '"VictorMono NFP", "SF Mono", Menlo, system-ui, sans-serif',
+  fontMono: '"VictorMono NFM", Menlo, "Courier New", monospace',
+  fontMediumWeight: '500',
 }
 
 // ─── Terminal ANSI — the Dark Studio ramps used verbatim (middle ramp
@@ -320,6 +327,39 @@ const SHIMMER_CSS = `
   }
 `
 
+// Font weight — the theme model carries font families (typography.fontSans /
+// fontMono) but no weight knob, and the app's default face weight rides the
+// body's font-weight:400 rule (0-1-0). Medium = 500 for the whole theme,
+// scoped by these selectors so no other theme's body rule is touched:
+// body (0-1-0) is re-decided on an equal-weight basis by the id attribute —
+// higher on the cascade, so it wins — and the element list lifts the
+// remaining (0-1-0) base declarations to (0-2,0) with compound selectors.
+// Marked-strength classes keep their own weights: .font-semibold (600),
+// .font-bold (700) and the like sit at (0-1,0)+ and never collide; what
+// shifts is the base 400 and .font-normal (both read --font-weight-normal,
+// which the weight classes override individually per element) — a permanent
+// 500 through a var swap would collapse every weight class into one value.
+// The composer editor text and terminal content are JS-managed (no class
+// chain to the body rule), so they get an explicit declaration each —
+// single selectors 0-1,0, no collision with the utility weight classes there.
+const FONT_CSS = `
+  #root,
+  body,
+  [data-slot='aui_assistant-message-content'],
+  [data-slot='message-row'],
+  [data-slot='sidebar-row'],
+  [data-slot='sidebar-pane'],
+  [data-slot='composer-root'],
+  [data-slot='settings-overlay'],
+  [data-slot='terminal-panel'] {
+    font-weight: ${V.fontMediumWeight};
+  }
+  [data-slot='composer-rich-input'],
+  [data-slot='terminal-content'] {
+    font-weight: ${V.fontMediumWeight};
+  }
+`
+
 // Settings + numeric fields (data-slot='input' / 'input-group' — the generic
 // Input and its prefix/suffix wrapper, all schema.type='number' fields
 // included, plus data-slot='select-trigger' — the selection boxes: the
@@ -334,7 +374,7 @@ const SHIMMER_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260901-3'
+const DS_BUILD = '20260912-1'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -407,7 +447,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + FONT_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
