@@ -51,6 +51,9 @@
  *                                   [data-conversation-    →   italic — tool mentions
  *                                    scaffold] (INTERNAL)    ("Memory write noted"),
  *                                                        status ticker, tool rows
+ *   (shiki token     →   scoped: pre/.shiki upright, →   code inside those rows
+ *    colors)            [style*='#768390'/         →   stays code; only COMMENT
+ *                           '#96d0ff'] italic      →   tokens + STRING tokens lean
  *   --input_bg #170700    →   scoped: --popover-      →   coachmark tip
  *                                surface (TIP_CSS)          bubble surface +
  *                                                           arrow (was full
@@ -355,6 +358,40 @@ const INTERNAL_CSS = `
   [data-conversation-scaffold] * {
     font-style: italic;
   }
+  /* Code stays code: the vitals of these rows are mechanical, NOT the
+     assistant's voice — and the user reads diffs / payloads as something
+     different. So every code-like region inside the mechanics layer renders
+     upright again: tool payload text, stdout/stderr, file-edit diffs (whose
+     container is a .shiki <pre>). Specificity (a,2,1) beats the blanket
+     (a,1,0) rule above for any element under <pre>.
+     The color-only diff path (plain .diff-line spans, no inline-color hooks)
+     stays upright with the pre — the color-hook rules below can't match it. */
+  [data-conversation-scaffold] pre,
+  [data-conversation-scaffold] pre *,
+  [data-conversation-scaffold] .shiki,
+  [data-conversation-scaffold] .shiki * {
+    font-style: normal;
+  }
+  /* Comment + string tokens, inside code that just went upright, lean —
+     the only two token classes the user wants set italic. Shiki emits
+     tokens as <span style="color: light-dark(#dark, #light)"> — no classes —
+     so the hook is the inline color itself. The values come from the two
+     SHIKI_THEME files (github-dark-dimmed + github-light-default, read from
+     node_modules): #768390 is the only color assigned to comment scope
+     (punctuation.definition.comment / string.comment too); #96d0ff is the
+     string family (string, string.regexp, string.other.link). Neither color
+     is assigned to any other token class in either palette — verified by
+     set-diff over all 49 tokenColor entries of each. The app's
+     SHIKI_COLOR_REPLACEMENTS (light-mode comment remap) rewrites only the
+     light-side hex, so the dark-side substring survives the light-dark()
+     printing even under light scheme. The bare-hex variants are the
+     fallback for any rendering path that skips the light-dark() wrapping. */
+  [data-conversation-scaffold] [style*='light-dark(#768390'],
+  [data-conversation-scaffold] [style*='#768390'],
+  [data-conversation-scaffold] [style*='light-dark(#96d0ff'],
+  [data-conversation-scaffold] [style*='#96d0ff'] {
+    font-style: italic;
+  }
 `
 
 // Font weight — the theme model carries font families (typography.fontSans /
@@ -404,7 +441,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260912-4'
+const DS_BUILD = '20260912-5'
 
 const INPUT_CSS = `
   [data-slot='input'],
