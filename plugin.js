@@ -44,9 +44,9 @@
  *                                   pill (ghost button)
  *   (none — white #fff)   →   scoped: --shimmer-color →   Thinking label's
  *                                   moving streak (SHIMMER_CSS)
- *   (installed font)    →   scoped: aui_thinking-body →   reasoning text
- *                                   italic (SHIMMER_CSS)     (thought, not output);
- *                                                              header row stays upright
+ *   (installed font)    →   scoped: aui_thinking-     →   whole thinking block
+ *                                   disclosure italic   →   italic — label row +
+ *                                   (SHIMMER_CSS)           reasoning text
  *   --input_bg #170700    →   scoped: --popover-      →   coachmark tip
  *                                surface (TIP_CSS)          bubble surface +
  *                                                           arrow (was full
@@ -328,14 +328,13 @@ const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
     --shimmer-color: #FFFFFF;
   }
-  /* The reasoning body reads as thought, not output: italic on the text
-     subtree only. The "Thinking" label header sits on a sibling row (the
-     disclosure root itself carries the shimmer streak) and stays upright —
-     targeting the body slot keeps the header, timer and timestamp normal.
-     Inherits into every child; VictorMono's ramp carries real Italics, so
-     no synthetic oblique. */
-  [data-slot='aui_thinking-body'],
-  [data-slot='aui_thinking-body'] * {
+  /* The reasoning block reads as thought, not output: italic across the
+     whole collapsible disclosure — the "Thinking" label row AND the text
+     body. (Body-only was the first pass; the row was asked for separately
+     and now carries it too.) VictorMono's ramp ships real italics, no
+     synthetic oblique; icon glyphs and the shimmer streak are unaffected. */
+  [data-slot='aui_thinking-disclosure'],
+  [data-slot='aui_thinking-disclosure'] * {
     font-style: italic;
   }
 `
@@ -387,7 +386,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260912-2'
+const DS_BUILD = '20260912-3'
 
 const INPUT_CSS = `
   [data-slot='input'],
