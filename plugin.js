@@ -47,6 +47,10 @@
  *   (installed font)    →   scoped: aui_thinking-     →   whole thinking block
  *                                   disclosure italic   →   italic — label row +
  *                                   (SHIMMER_CSS)           reasoning text
+ *   (scaffold mark)     →   scoped:                   →   internal mechanics
+ *                                   [data-conversation-    →   italic — tool mentions
+ *                                    scaffold] (INTERNAL)    ("Memory write noted"),
+ *                                                        status ticker, tool rows
  *   --input_bg #170700    →   scoped: --popover-      →   coachmark tip
  *                                surface (TIP_CSS)          bubble surface +
  *                                                           arrow (was full
@@ -339,6 +343,20 @@ const SHIMMER_CSS = `
   }
 `
 
+// Internal mechanics — the "not the deliverable" rows: tool mentions
+// ("Memory write noted"), the status ticker, system rows, and the delegate
+// card. All carry data-conversation-scaffold (the documented block mark in
+// scaffold-row.tsx — the resting fade also rides it in styles.css); the tool
+// blocks' expanded result payloads sit in the same subtree, so they lean
+// too — the whole machine-internal layer reads apart from the assistant's
+// actual output. Real VictorMono italics, no synthetic oblique.
+const INTERNAL_CSS = `
+  [data-conversation-scaffold],
+  [data-conversation-scaffold] * {
+    font-style: italic;
+  }
+`
+
 // Font weight — the theme model carries font families (typography.fontSans /
 // fontMono) but no weight knob, and the app's default face weight rides the
 // body's font-weight:400 rule (0-1-0). Medium = 500 for the whole theme,
@@ -386,7 +404,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260912-3'
+const DS_BUILD = '20260912-4'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -459,7 +477,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + FONT_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + FONT_CSS + INTERNAL_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
