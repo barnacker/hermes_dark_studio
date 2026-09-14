@@ -47,6 +47,8 @@
  *   (installed font)    →   scoped: aui_thinking-     →   whole thinking block
  *                                   disclosure italic   →   italic — label row +
  *                                   (SHIMMER_CSS)           reasoning text
+ *   (app prose size)    →   scoped: aui_reasoning-text→   thinking body 0.75rem —
+ *                                   0.75rem (SHIMMER)       one step under reply text
  *   (scaffold mark)     →   scoped:                   →   internal mechanics
  *                                   [data-conversation-    →   italic — tool mentions
  *                                    scaffold] (INTERNAL)    ("Memory write noted"),
@@ -335,6 +337,15 @@ const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
     --shimmer-color: #FFFFFF;
   }
+  /* Thinking BODY one step smaller than the reply text. The app's
+     styles.css paints scoped CSS with no @layer, and unlayered author CSS
+     beats @layer'd utilities — so font-size here outranks the .aui-md
+     container class (and its text-xs override). 0.75rem = exactly one text
+     step below the 0.8125rem prose, above the 0.6875rem label row. Body
+     only: the reasoning text subtree, not the "Thinking" header row. */
+  [data-slot='aui_thinking-disclosure'] [data-slot='aui_reasoning-text'] {
+    font-size: 0.75rem;
+  }
   /* The reasoning block reads as thought, not output: italic across the
      whole collapsible disclosure — the "Thinking" label row AND the text
      body. (Body-only was the first pass; the row was asked for separately
@@ -441,7 +452,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260912-5'
+const DS_BUILD = '20260914-1'
 
 const INPUT_CSS = `
   [data-slot='input'],
