@@ -452,7 +452,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260914-2'
+const DS_BUILD = '20260915-1'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -509,6 +509,23 @@ const TIP_CSS = `
   }
 `
 
+// The left-panel show/hide toggle — the titlebar's "sidebar" tool. Its glyph is
+// the Codicon `layout-sidebar-left`, which renders the global class
+// .codicon-layout-sidebar-left — a name used in exactly ONE place in the app,
+// so this scope hits only that control: the right-panel tool (…sidebar-right),
+// flip-panes, and every other titlebar tool stay untouched. The button itself
+// rides the shared titlebarButtonClass (rest = muted-foreground/85, a dimmed
+// warm read in this theme), so the icon idled dim and only flashed the body
+// color on hover. Pin the glyph at the full window-text orange (verbatim
+// --text) at rest AND on hover; a color set directly on the glyph beats the
+// inherited muted value from its button, and the button's hover FILL is a
+// different property, so the whole titlebar otherwise stays as-is.
+const SIDEBAR_TOGGLE_CSS = `
+  .codicon-layout-sidebar-left {
+    color: ${V.foreground} !important;
+  }
+`
+
 function injectComposerCss() {
   if (typeof document === 'undefined') return
   // A stale <style> from an earlier build — drop it so only the new one remains
@@ -525,7 +542,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + FONT_CSS + INTERNAL_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + FONT_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
