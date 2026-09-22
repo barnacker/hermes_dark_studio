@@ -101,7 +101,12 @@ Every value stays in `#RRGGBB` form.
 
 - The name `dark-studio` must not collide with a built-in desktop
   theme id (`nous`, `mono`, `slate`, `cyberpunk`, `midnight`, `ember`).
-- Iosevka Term is first in the font stack for the Dark Studio look;
-  where it isn't installed, the stack falls through to system monospace.
+- The UI face is **RecMonoDuotone Nerd Font Propo** (proportional cut) and
+  the code face is **RecMonoDuotone Nerd Font Mono** (tabular cut) — the
+  family names above are what the installed TTFs declare, not their file
+  names. Install the full Nerd Fonts Recursive Mono package
+  (e.g. `brew install --cask font-recursive-mono-nerd-font`, or the `NFP` /
+  `NFM` copy of 3.5.1) and the theme uses it; where it isn't installed,
+  the stack falls through to system monospace.
 - This repo is desktop-app theming only; the source palette lives in
   `barnacker/dark_studio`.

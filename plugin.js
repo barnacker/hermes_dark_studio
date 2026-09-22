@@ -75,11 +75,13 @@
  *       #0d1a32           →   scoped: settings active →   Settings section rows
  *                              row fill + border-off   (overlay nav); the
  *                              (NAV_PANEL_CSS)           boxed border is removed
- *   (installed font)    →   typography.fontSans /   →   UI face: VictorMono NFP
- *                       + fontMediumWeight          →   (proportional cut);
- *                              (FONT_CSS, 500)           code face: VictorMono NFM
- *                                    fontMono; medium →   (tabular cut); all text at
- *                                    weight across theme →   weight 500
+ *   (installed font)    →   typography.fontSans /   →   UI face: RecMonoDuotone
+ *                       + fontMediumWeight          →   Nerd Font Propo
+ *                              (FONT_CSS, 500)           (proportional cut);
+ *                                    fontMono; medium →   code face: RecMonoDuotone
+ *                                    weight across theme →   Nerd Font Mono
+ *                                                      →   (tabular cut); all text
+ *                                                           at weight 500
  *
  * To tweak ANY detail: edit the VALUES table below and re-save — the plugin
  * hot-reloads and the ⌘K "Dark Studio" command re-registers the updated
@@ -149,12 +151,13 @@ const V = {
   // (28% of it).
   navSelected: '#0D1A32',   // --button_bg (darker blue of the button pair)
 
-  // Font — Victor Mono Nerd Font: the proportional (Propo) cut as the UI face,
-  // the tabular (Mono) cut for code. Both are installed locally in
-  // C:\Windows\Fonts with a full weight ramp (Thin→Black), so explicit
-  // font-weight values resolve to real glyphs (no synthetic bolding).
-  font: '"VictorMono NFP", "SF Mono", Menlo, system-ui, sans-serif',
-  fontMono: '"VictorMono NFM", Menlo, "Courier New", monospace',
+  // Font — RecMono Duotone Nerd Font: the proportional (Propo) cut as the UI
+  // face, the tabular (Mono) cut for code. Family names read from the
+  // installed TTFs' name tables in C:\Windows\Fonts — RecMono ships only a
+  // Regular–Bold ramp (Nerd Fonts 3.5.1 static build), so 500 sits on the
+  // real glyphs, no synthetic bolding.
+  font: '"RecMonoDuotone Nerd Font Propo", "RecMonoDuotone Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
+  fontMono: '"RecMonoDuotone Nerd Font Mono", "SF Mono", "Courier New", monospace',
   fontMediumWeight: '500',
 }
 
@@ -452,7 +455,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260915-1'
+const DS_BUILD = '20260922-1'
 
 const INPUT_CSS = `
   [data-slot='input'],
