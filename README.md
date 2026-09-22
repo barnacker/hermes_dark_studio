@@ -4,6 +4,8 @@ A dark, warm theme for the Hermes desktop app — the
 [Dark Studio](https://github.com/barnacker/dark_studio) palette,
 tuned for the desktop.
 
+![Dark Studio applied](preview.png)
+
 ## Install
 
 ### 1. Copy this line
