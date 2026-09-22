@@ -76,12 +76,16 @@
  *                              row fill + border-off   (overlay nav); the
  *                              (NAV_PANEL_CSS)           boxed border is removed
  *   (installed font)    →   typography.fontSans /   →   UI face: RecMonoDuotone
- *                       + fontMediumWeight          →   Nerd Font Propo
- *                              (FONT_CSS, 500)           (proportional cut);
- *                                    fontMono; medium →   code face: RecMonoDuotone
- *                                    weight across theme →   Nerd Font Mono
- *                                                      →   (tabular cut); all text
- *                                                           at weight 500
+ *                       + fontMono                  →   Nerd Font Propo
+ *                                                      →   (proportional cut);
+ *                                                      →   code face: RecMonoDuotone
+ *                                                      →   Nerd Font Mono
+ *                                                      →   (tabular cut); weight
+ *                                                      →   left to the font's own
+ *                                                      →   natural ramp — RecMono
+ *                                                      →   Regular–Bold only, so
+ *                                                      →   marked classes are the
+ *                                                      →   only weight shifts
  *
  * To tweak ANY detail: edit the VALUES table below and re-save — the plugin
  * hot-reloads and the ⌘K "Dark Studio" command re-registers the updated
@@ -153,12 +157,12 @@ const V = {
 
   // Font — RecMono Duotone Nerd Font: the proportional (Propo) cut as the UI
   // face, the tabular (Mono) cut for code. Family names read from the
-  // installed TTFs' name tables in C:\Windows\Fonts — RecMono ships only a
-  // Regular–Bold ramp (Nerd Fonts 3.5.1 static build), so 500 sits on the
-  // real glyphs, no synthetic bolding.
+  // installed TTFs' name tables in C:\Windows\Fonts, not the file names.
+  // Weight: left to the font's own natural ramp (Regular–Bold) — no scoped
+  // font-weight override, marked .font-semibold/.font-bold keep their class
+  // weights.
   font: '"RecMonoDuotone Nerd Font Propo", "RecMonoDuotone Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
   fontMono: '"RecMonoDuotone Nerd Font Mono", "SF Mono", "Courier New", monospace',
-  fontMediumWeight: '500',
 }
 
 // ─── Terminal ANSI — the Dark Studio ramps used verbatim (middle ramp
@@ -408,39 +412,6 @@ const INTERNAL_CSS = `
   }
 `
 
-// Font weight — the theme model carries font families (typography.fontSans /
-// fontMono) but no weight knob, and the app's default face weight rides the
-// body's font-weight:400 rule (0-1-0). Medium = 500 for the whole theme,
-// scoped by these selectors so no other theme's body rule is touched:
-// body (0-1-0) is re-decided on an equal-weight basis by the id attribute —
-// higher on the cascade, so it wins — and the element list lifts the
-// remaining (0-1-0) base declarations to (0-2,0) with compound selectors.
-// Marked-strength classes keep their own weights: .font-semibold (600),
-// .font-bold (700) and the like sit at (0-1,0)+ and never collide; what
-// shifts is the base 400 and .font-normal (both read --font-weight-normal,
-// which the weight classes override individually per element) — a permanent
-// 500 through a var swap would collapse every weight class into one value.
-// The composer editor text and terminal content are JS-managed (no class
-// chain to the body rule), so they get an explicit declaration each —
-// single selectors 0-1,0, no collision with the utility weight classes there.
-const FONT_CSS = `
-  #root,
-  body,
-  [data-slot='aui_assistant-message-content'],
-  [data-slot='message-row'],
-  [data-slot='sidebar-row'],
-  [data-slot='sidebar-pane'],
-  [data-slot='composer-root'],
-  [data-slot='settings-overlay'],
-  [data-slot='terminal-panel'] {
-    font-weight: ${V.fontMediumWeight};
-  }
-  [data-slot='composer-rich-input'],
-  [data-slot='terminal-content'] {
-    font-weight: ${V.fontMediumWeight};
-  }
-`
-
 // Settings + numeric fields (data-slot='input' / 'input-group' — the generic
 // Input and its prefix/suffix wrapper, all schema.type='number' fields
 // included, plus data-slot='select-trigger' — the selection boxes: the
@@ -455,7 +426,7 @@ const FONT_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260922-1'
+const DS_BUILD = '20260922-2'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -545,7 +516,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + FONT_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
