@@ -75,10 +75,10 @@
  *       #0d1a32           →   scoped: settings active →   Settings section rows
  *                              row fill + border-off   (overlay nav); the
  *                              (NAV_PANEL_CSS)           boxed border is removed
- *   (installed font)    →   typography.fontSans /   →   UI face: RecMonoDuotone
+ *   (installed font)    →   typography.fontSans /   →   UI face: RecMonoLinear
  *                       + fontMono                  →   Nerd Font Propo
  *                                                      →   (proportional cut);
- *                                                      →   code face: RecMonoDuotone
+ *                                                      →   code face: RecMonoLinear
  *                                                      →   Nerd Font Mono
  *                                                      →   (tabular cut); weight
  *                                                      →   left to the font's own
@@ -155,14 +155,16 @@ const V = {
   // (28% of it).
   navSelected: '#0D1A32',   // --button_bg (darker blue of the button pair)
 
-  // Font — RecMono Duotone Nerd Font: the proportional (Propo) cut as the UI
+  // Font — RecMono Linear Nerd Font: the proportional (Propo) cut as the UI
   // face, the tabular (Mono) cut for code. Family names read from the
-  // installed TTFs' name tables in C:\Windows\Fonts, not the file names.
+  // installed TTFs' name tables (RecMonoLinear v3.5.1: family =
+  // 'RecMonoLinear Nerd Font Propo' / 'RecMonoLinear Nerd Font Mono',
+  // PostScript RecMonoLinearNFP / RecMonoLinearNFM), not the file names.
   // Weight: left to the font's own natural ramp (Regular–Bold) — no scoped
   // font-weight override, marked .font-semibold/.font-bold keep their class
   // weights.
-  font: '"RecMonoDuotone Nerd Font Propo", "RecMonoDuotone Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
-  fontMono: '"RecMonoDuotone Nerd Font Mono", "SF Mono", "Courier New", monospace',
+  font: '"RecMonoLinear Nerd Font Propo", "RecMonoLinear Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
+  fontMono: '"RecMonoLinear Nerd Font Mono", "SF Mono", "Courier New", monospace',
 }
 
 // ─── Terminal ANSI — the Dark Studio ramps used verbatim (middle ramp
@@ -507,7 +509,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260925-6'
+const DS_BUILD = '20260925-7'
 
 const INPUT_CSS = `
   [data-slot='input'],

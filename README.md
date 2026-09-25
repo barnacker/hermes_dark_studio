@@ -33,22 +33,22 @@ Done. The look is stored on the machine running the app.
 
 ## Font (recommended)
 
-The theme's letterforms come from **RecMono Duotone Nerd Font** — the
+The theme's letterforms come from **RecMono Linear Nerd Font** — the
 proportional (Propo) cut for the UI, the tabular (Mono) cut for code.
 Install it and the theme looks as intended; without it the stack falls
 through to system monospace and the character is lost.
 
 - **One package.** [Nerd Fonts 3.5.1](https://github.com/ryanoasis/nerd-fonts/releases/tag/v3.5.1) →
-  `Recursive.tar.xz` — 12 `RecMonoDuotoneNerdFont…` TTFs (Duotone, 3 cuts ×
+  `Recursive.tar.xz` — 12 `RecMonoLinearNerdFont…` TTFs (Linear, 3 cuts ×
   4 each, plus the other 3 RecMono shapes).
-- **Windows:** right-click Duotone's three families —
-  `RecMonoDuotoneNerdFontPropo-*.ttf` (proportional),
-  `RecMonoDuotoneNerdFontMono-*.ttf` (tabular),
-  `RecMonoDuotoneNerdFont-*.ttf` (base) → **Install for all users**.
+- **Windows:** right-click Linear's three families —
+  `RecMonoLinearNerdFontPropo-*.ttf` (proportional),
+  `RecMonoLinearNerdFontMono-*.ttf` (tabular),
+  `RecMonoLinearNerdFont-*.ttf` (base) → **Install for all users**.
 - **macOS:** `brew install --cask font-recursive-mono-nerd-font`.
 - **Linux:** copy the TTFs to `~/.fonts`, `fc-cache -f`.
 - **Verify:** the family names are what the TTFs declare —
-  `RecMonoDuotone Nerd Font Propo` and `RecMonoDuotone Nerd Font Mono`
+  `RecMonoLinear Nerd Font Propo` and `RecMonoLinear Nerd Font Mono`
   (not the file names).
 
 ## Updating later
@@ -123,8 +123,8 @@ Every value stays in `#RRGGBB` form.
 
 - The name `dark-studio` must not collide with a built-in desktop
   theme id (`nous`, `mono`, `slate`, `cyberpunk`, `midnight`, `ember`).
-- The UI face is **RecMonoDuotone Nerd Font Propo** (proportional cut) and
-  the code face is **RecMonoDuotone Nerd Font Mono** (tabular cut); weight
+- The UI face is **RecMonoLinear Nerd Font Propo** (proportional cut) and
+  the code face is **RecMonoLinear Nerd Font Mono** (tabular cut); weight
   rides the font's own ramp (no scoped override). Install itself: the
   **Font** section above.
 - This repo is desktop-app theming only; the source palette lives in
