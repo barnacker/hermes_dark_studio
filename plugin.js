@@ -376,6 +376,23 @@ const CODE_SHIKI_KEYWORD = `
   }
 `
 
+// Fourth incremental hue: #6CB6FF — dimmed's "constant / variable.other.constant"
+// family (constants, numeric hex, declare-position identifiers in
+// `const X = …`). DS tokenColors point this at #9EF019 lime (top-level
+// constants, enums, numbers, bools). Local/in-function `const x =` identifiers
+// are NOT semantically distinguishable under TextMate — not through any CSS I
+// can speak here; the VSCode editor sees them via its own semantic-token
+// channel which shiki lacks. Accept the editor→chat divergence: both land
+// lime here.
+const CODE_SHIKI_CONSTANT = `
+  [data-slot='code-card'] pre code span[style*='#6CB6FF'] {
+    color: #9EF019 !important;
+  }
+  [data-slot='code-card'] pre code span[style*='#6cb6ff'] {
+    color: #9EF019 !important;
+  }
+`
+
 // Thinking indicator: the amber "shimmer" streak the user reads as yellow is
 // the tw-shimmer lib lightening currentColor (~40%) into a gold streak. Its
 // own knob --shimmer-color drives the moving streak; setting it white leaves
@@ -468,7 +485,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260925-4'
+const DS_BUILD = '20260925-5'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -558,7 +575,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
