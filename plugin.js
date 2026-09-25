@@ -334,6 +334,18 @@ const CODE_CSS = `
   }
 `
 
+// Incremental re-entry of the DS-vs-shiki token override. One token at a
+// time. The first token is the comment — the hue the live build of the
+// app known to emit lowercased (#768390, verified in the user's DevTools
+// sample), and the one our earlier patch proved to render correctly on a
+// running build before broader changes regressed it. Adding the other 10
+// hues only after this one passes the visual test.
+const CODE_SHIKI_COMMENT = `
+  [data-slot='code-card'] pre code span[style*='#768390'] {
+    color: #696959 !important;
+  }
+`
+
 // Thinking indicator: the amber "shimmer" streak the user reads as yellow is
 // the tw-shimmer lib lightening currentColor (~40%) into a gold streak. Its
 // own knob --shimmer-color drives the moving streak; setting it white leaves
@@ -426,7 +438,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260922-2'
+const DS_BUILD = '20260925-1'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -516,7 +528,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
