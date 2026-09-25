@@ -393,6 +393,28 @@ const CODE_SHIKI_CONSTANT = `
   }
 `
 
+
+// Incremental hues 5-7 — every remaining stock dimmed hue remapped
+// to the DS VSCode palette from its entry in 47 TextMate tokenColors
+// in barnacker/dark-studio-vscode/master (latest, verified live above).
+// the same 47-entry table the editor renders for these languages.
+const CODE_SHIKI_RULES = `
+  [data-slot='code-card'] pre code span[style*='#8DDB8C'] { color: #7CB375 !important; }  /* class / tag / component */
+  [data-slot='code-card'] pre code span[style*='#8ddb8c'] { color: #7CB375 !important; }  /* class / tag / component (lc) */
+  [data-slot='code-card'] pre code span[style*='#DCBDFB'] { color: #F0612D !important; }  /* function names (entity.name.function) */
+  [data-slot='code-card'] pre code span[style*='#dcbdfb'] { color: #F0612D !important; }  /* function names (entity.name.function) (lc) */
+  [data-slot='code-card'] pre code span[style*='#F69D50'] { color: #F9A201 !important; }  /* types (entity.name / meta.definition.variable) */
+  [data-slot='code-card'] pre code span[style*='#f69d50'] { color: #F9A201 !important; }  /* types (entity.name / meta.definition.variable) (lc) */
+  [data-slot='code-card'] pre code span[style*='#ADBAC7'] { color: #E8E8E3 !important; }  /* variables / general identifiers */
+  [data-slot='code-card'] pre code span[style*='#adbac7'] { color: #E8E8E3 !important; }  /* variables / general identifiers (lc) */
+  [data-slot='code-card'] pre code span[style*='#CDD9E5'] { color: #E8E8E3 !important; }  /* fallback text */
+  [data-slot='code-card'] pre code span[style*='#cdd9e5'] { color: #E8E8E3 !important; }  /* fallback text (lc) */
+  [data-slot='code-card'] pre code span[style*='#FF938A'] { color: #E52E2E !important; }  /* invalid / errors */
+  [data-slot='code-card'] pre code span[style*='#ff938a'] { color: #E52E2E !important; }  /* invalid / errors (lc) */
+  [data-slot='code-card'] pre code span[style*='#2D333B'] { color: #E8E8E3 !important; }  /* markup.ignored foreground */
+  [data-slot='code-card'] pre code span[style*='#2d333b'] { color: #E8E8E3 !important; }  /* markup.ignored foreground (lc) */
+`
+
 // Thinking indicator: the amber "shimmer" streak the user reads as yellow is
 // the tw-shimmer lib lightening currentColor (~40%) into a gold streak. Its
 // own knob --shimmer-color drives the moving streak; setting it white leaves
@@ -485,7 +507,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260925-5'
+const DS_BUILD = '20260925-6'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -575,7 +597,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
