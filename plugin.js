@@ -347,6 +347,22 @@ const CODE_SHIKI_COMMENT = `
   }
 `
 
+// Second incremental hue: strings. The user's DevTools sample showed the
+// string token carrying the light-dark value #96D0FF in uppercase in the
+// running build (the defaultColor: light-dark() wrapping keeps the case of
+// whichever side the source theme used). Matching both cases on the hook,
+// same mechanism the comment hook proved on both renders.
+const CODE_SHIKI_STRING = `
+  [data-slot='code-card'] pre code span[style*='#96D0FF'] {
+    color: #F5C024 !important;
+    font-style: italic;
+  }
+  [data-slot='code-card'] pre code span[style*='#96d0ff'] {
+    color: #F5C024 !important;
+    font-style: italic;
+  }
+`
+
 // Thinking indicator: the amber "shimmer" streak the user reads as yellow is
 // the tw-shimmer lib lightening currentColor (~40%) into a gold streak. Its
 // own knob --shimmer-color drives the moving streak; setting it white leaves
@@ -439,7 +455,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260925-2'
+const DS_BUILD = '20260925-3'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -529,7 +545,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
