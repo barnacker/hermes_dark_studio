@@ -343,6 +343,7 @@ const CODE_CSS = `
 const CODE_SHIKI_COMMENT = `
   [data-slot='code-card'] pre code span[style*='#768390'] {
     color: #696959 !important;
+    font-style: italic;
   }
 `
 
@@ -438,7 +439,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260925-1'
+const DS_BUILD = '20260925-2'
 
 const INPUT_CSS = `
   [data-slot='input'],
