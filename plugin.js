@@ -436,17 +436,26 @@ const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] * {
     font-style: italic;
   }
-  /* Chat body text size — op 2026-09-29: 18px for the Glass TTY VT220
+  /* Chat body text size — op 2026-09-29: 22px for the Glass TTY VT220
      era. Same mechanism as the thinking-body rule: the app paints reply
      text via layered utilities, and this unlayered author rule sits on
      the message content roots, so font-size here wins for every painted
      line that inherits (headings, lists, paragraphs). Fenced pre text
      (Shiki's own font-size on the pre) and em-sized inline code keep
      their relative bearings; the thinking disclosure block sits
-     later in source order and keeps its own size (fenced pre + thinking
-     carve-outs below). */
+     later in source order and keeps its own size. */
   [data-slot='aui_assistant-message-content'],
   [data-slot='aui_user-message-text'] {
+    font-size: 22px;
+  }
+  /* Sidebar session title, op 2026-09-29: 18px. Verified hook from
+     session-row.tsx: the title span carries .hover-marquee-inner
+     (inside .hover-marquee, used only by sidebar row titles — the
+     compound keeps the hook unambiguous). Leading is 1.35 (app's
+     SIDEBAR_TRUNCATED_LEADING), the row's min-height class stretches
+     the row to fit; nothing clips. Metadata + preview lines (10px,
+     dim) untouched — only the bold title grows. */
+  .hover-marquee .hover-marquee-inner {
     font-size: 18px;
   }
 `
@@ -513,7 +522,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-2'
+const DS_BUILD = '20260929-3'
 
 const INPUT_CSS = `
   [data-slot='input'],
