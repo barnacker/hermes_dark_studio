@@ -427,17 +427,17 @@ const GEO_CSS = `
      multiplied against its current value by 1.2. The code fences (row
      leading constant, fixed 1.25rem row) are left as-is. */
   :root {
-    --dt-line-height: calc(1.5 * 1.2);
+    --dt-line-height: calc(1.5 * 0.84);
   }
   [data-slot='aui_assistant-message-content'] {
-    line-height: calc(1.5 * 1.2) !important;
+    line-height: calc(1.5 * 0.84) !important;
   }
   [data-slot='aui_user-message-root'],
   [data-slot='aui_edit-composer-root'] {
-    --human-msg-line-height: calc(1.3 * 1.2);
+    --human-msg-line-height: calc(1.3 * 0.84);
   }
   .aui-md {
-    line-height: calc(1.45 * 1.2) !important;
+    line-height: calc(1.45 * 0.84) !important;
   }
 `
 
