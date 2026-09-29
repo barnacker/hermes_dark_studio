@@ -421,7 +421,7 @@ const SIDEBAR_DIAG_CSS = `
      the row-shell Tailwind class compound missed (stripped build?). Every
      row carries data-row-actions (chrome.tsx SidebarRowShell) — parent
      selector via :has() (Electron Chromium 105+ supports it). */
-  [data-row-actions] {
+  div:has(> [data-row-actions]) {
     border-left: 2px solid #db0000 !important;
   }
 `
@@ -549,7 +549,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-10'
+const DS_BUILD = '20260929-11'
 
 const INPUT_CSS = `
   [data-slot='input'],
