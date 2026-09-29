@@ -75,17 +75,12 @@
  *       #0d1a32           →   scoped: settings active →   Settings section rows
  *                              row fill + border-off   (overlay nav); the
  *                              (NAV_PANEL_CSS)           boxed border is removed
- *   (installed font)    →   typography.fontSans /   →   UI face: RecMonoLinear
- *                       + fontMono                  →   Nerd Font Propo
- *                                                      →   (proportional cut);
- *                                                      →   code face: RecMonoLinear
- *                                                      →   Nerd Font Mono
- *                                                      →   (tabular cut); weight
- *                                                      →   left to the font's own
- *                                                      →   natural ramp — RecMono
- *                                                      →   Regular–Bold only, so
- *                                                      →   marked classes are the
- *                                                      →   only weight shifts
+ *   (installed font)    →   typography.fontSans /   →   UI face: Glass TTY VT220
+ *                       + fontMono                  →   code face: Glass TTY VT220
+ *                                                      →   (VT220 cut, single
+ *                                                      →   weight — no Bold face;
+ *                                                      →   synth where marked
+ *                                                      →   classes ask for it)
  *
  * To tweak ANY detail: edit the VALUES table below and re-save — the plugin
  * hot-reloads and the ⌘K "Dark Studio" command re-registers the updated
@@ -155,16 +150,12 @@ const V = {
   // (28% of it).
   navSelected: '#0D1A32',   // --button_bg (darker blue of the button pair)
 
-  // Font — RecMono Linear Nerd Font: the proportional (Propo) cut as the UI
-  // face, the tabular (Mono) cut for code. Family names read from the
-  // installed TTFs' name tables (RecMonoLinear v3.5.1: family =
-  // 'RecMonoLinear Nerd Font Propo' / 'RecMonoLinear Nerd Font Mono',
-  // PostScript RecMonoLinearNFP / RecMonoLinearNFM), not the file names.
-  // Weight: left to the font's own natural ramp (Regular–Bold) — no scoped
-  // font-weight override, marked .font-semibold/.font-bold keep their class
-  // weights.
-  font: '"RecMonoLinear Nerd Font Propo", "RecMonoLinear Nerd Font", "SF Mono", Menlo, system-ui, sans-serif',
-  fontMono: '"RecMonoLinear Nerd Font Mono", "SF Mono", "Courier New", monospace',
+  // Font — Glass TTY VT220 (svofski/glasstty): one face, single weight, no
+  // regular-bold ramp — the TTF's declared family name. UI and code slots
+  // share the family; the theme model carries no weight token, so marked
+  // .font-semibold/.font-bold ask the OS to synthesize.
+  font: '"Glass TTY VT220", "SF Mono", Menlo, system-ui, sans-serif',
+  fontMono: '"Glass TTY VT220", "SF Mono", "Courier New", monospace',
 }
 
 // ─── Terminal ANSI — the Dark Studio ramps used verbatim (middle ramp
@@ -509,7 +500,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260925-7'
+const DS_BUILD = '20260929-1'
 
 const INPUT_CSS = `
   [data-slot='input'],

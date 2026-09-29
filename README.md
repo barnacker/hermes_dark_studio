@@ -33,23 +33,19 @@ Done. The look is stored on the machine running the app.
 
 ## Font (recommended)
 
-The theme's letterforms come from **RecMono Linear Nerd Font** — the
-proportional (Propo) cut for the UI, the tabular (Mono) cut for code.
-Install it and the theme looks as intended; without it the stack falls
-through to system monospace and the character is lost.
+The theme's letterforms come from **Glass TTY VT220** — Viacheslav
+Slavinsky's TrueType, a VT220 terminal face. One family, single weight,
+shared by the UI and code slots (the theme carries family names only, no
+weight token, so marked bold is synthesized).
 
-- **One package.** [Nerd Fonts 3.5.1](https://github.com/ryanoasis/nerd-fonts/releases/tag/v3.5.1) →
-  `Recursive.tar.xz` — 12 `RecMonoLinearNerdFont…` TTFs (Linear, 3 cuts ×
-  4 each, plus the other 3 RecMono shapes).
-- **Windows:** right-click Linear's three families —
-  `RecMonoLinearNerdFontPropo-*.ttf` (proportional),
-  `RecMonoLinearNerdFontMono-*.ttf` (tabular),
-  `RecMonoLinearNerdFont-*.ttf` (base) → **Install for all users**.
-- **macOS:** `brew install --cask font-recursive-mono-nerd-font`.
-- **Linux:** copy the TTFs to `~/.fonts`, `fc-cache -f`.
-- **Verify:** the family names are what the TTFs declare —
-  `RecMonoLinear Nerd Font Propo` and `RecMonoLinear Nerd Font Mono`
-  (not the file names).
+- **Source:** [svofski/glasstty](https://github.com/svofski/glasstty) →
+  `Glass_TTY_VT220.ttf`.
+- **Windows:** right-click `Glass_TTY_VT220.ttf` → **Install for all
+  users**.
+- **macOS:** double-click the TTF → Open in Font Book.
+- **Linux:** copy to `~/.fonts`, `fc-cache -f`.
+- **Verify:** the family name is what the TTF declares — `Glass TTY VT220`
+  (not the file name).
 
 ## Updating later
 
@@ -123,9 +119,8 @@ Every value stays in `#RRGGBB` form.
 
 - The name `dark-studio` must not collide with a built-in desktop
   theme id (`nous`, `mono`, `slate`, `cyberpunk`, `midnight`, `ember`).
-- The UI face is **RecMonoLinear Nerd Font Propo** (proportional cut) and
-  the code face is **RecMonoLinear Nerd Font Mono** (tabular cut); weight
-  rides the font's own ramp (no scoped override). Install itself: the
+- The UI and code faces are both **Glass TTY VT220** (single family,
+  single weight — bold is synthesized where marked). Install itself: the
   **Font** section above.
 - This repo is desktop-app theming only; the source palette lives in
   `barnacker/dark_studio`.
