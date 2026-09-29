@@ -441,6 +441,16 @@ const GEO_CSS = `
   }
 `
 
+const SIDEBAR_TIGHT_CSS = `
+  /* Sidebar (line-height only) x0.84, op 2026-09-30. Row titles carry
+     the app's leading-\\[1.35\\] (SIDEBAR_TRUNCATED_LEADING) —
+     unlayered override. */
+  .hover-marquee,
+  .hover-marquee * {
+    line-height: calc(1.35 * 0.84);
+  }
+`
+
 const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
     --shimmer-color: #FFFFFF;
@@ -651,7 +661,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + GEO_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + GEO_CSS + SIDEBAR_TIGHT_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
