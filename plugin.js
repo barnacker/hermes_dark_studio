@@ -414,6 +414,16 @@ const CODE_SHIKI_RULES = `
 // motion params and every other shimmer consumer untouched. Verified:
 // message-parts.tsx:233 (label span gets .shimmer only while pending, inside
 // the data-slot='aui_thinking-disclosure' container).
+const GEO_CSS = `
+  /* Global line-height, op 2026-09-30: 1.4 across the app (was ~1.5).
+     Inherited from <html> — one line the whole UI gets denser, incl.
+     menus, settings, sidebar. Elements with their own explicit
+     line-height rule (pre/code fences, table cells) hold. */
+  html {
+    line-height: 1.4;
+  }
+`
+
 const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
     --shimmer-color: #FFFFFF;
@@ -534,7 +544,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260930-2'
+const DS_BUILD = '20260930-3'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -624,7 +634,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + GEO_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
