@@ -414,18 +414,6 @@ const CODE_SHIKI_RULES = `
 // motion params and every other shimmer consumer untouched. Verified:
 // message-parts.tsx:233 (label span gets .shimmer only while pending, inside
 // the data-slot='aui_thinking-disclosure' container).
-const SIDEBAR_DIAG_CSS = `
-  /* row-nesting mapper. magenta = virtualizer row (data-index); green = reorder handle; blue = grid shell (actions column parent). */
-  [data-index] {
-    outline: 1px solid #ff00cc !important;
-  }
-  [data-reorder-handle] {
-    outline: 1px solid #00cc44 !important;
-  }
-  div:has(> [data-row-actions]) {
-    outline: 1px solid #0066ff !important;
-  }
-
 const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
     --shimmer-color: #FFFFFF;
@@ -481,10 +469,7 @@ const SHIMMER_CSS = `
      self-center, so 12px titles sit in the 20px band without
      clipping (leading 1.35 -> 16.2px box). Icon leads stay 14px
      (SIDEBAR_ROW_LEAD fixed grid, em-anchored). */
-  .min-\[1\.625rem\]\.grid\.grid-cols-\[minmax\(0,1fr\)_auto\]\.items-stretch\.rounded-md\.pr-2 {
-    min-height: 20px;
-    border-left: 2px solid #db0000; /* diagnostic: switch off after line-height read */
-  }
+
 `
 
 // Internal mechanics — the "not the deliverable" rows: tool mentions
@@ -549,7 +534,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-13'
+const DS_BUILD = '20260930-1'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -639,7 +624,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + SIDEBAR_DIAG_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
