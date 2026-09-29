@@ -456,7 +456,7 @@ const SHIMMER_CSS = `
      the row to fit; nothing clips. Metadata + preview lines (10px,
      dim) untouched — only the bold title grows. */
   .hover-marquee .hover-marquee-inner {
-    font-size: 14px;
+    font-size: 12px;
   }
 `
 
@@ -522,7 +522,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-6'
+const DS_BUILD = '20260929-7'
 
 const INPUT_CSS = `
   [data-slot='input'],
