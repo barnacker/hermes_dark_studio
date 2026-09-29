@@ -446,7 +446,7 @@ const SHIMMER_CSS = `
      later in source order and keeps its own size. */
   [data-slot='aui_assistant-message-content'],
   [data-slot='aui_user-message-text'] {
-    font-size: 18px;
+    font-size: 16px;
   }
   /* Sidebar session title, op 2026-09-29: 18px. Verified hook from
      session-row.tsx: the title span carries .hover-marquee-inner
@@ -522,7 +522,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-5'
+const DS_BUILD = '20260929-6'
 
 const INPUT_CSS = `
   [data-slot='input'],
