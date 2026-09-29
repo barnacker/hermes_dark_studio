@@ -414,6 +414,18 @@ const CODE_SHIKI_RULES = `
 // motion params and every other shimmer consumer untouched. Verified:
 // message-parts.tsx:233 (label span gets .shimmer only while pending, inside
 // the data-slot='aui_thinking-disclosure' container).
+const SIDEBAR_DIAG_CSS = `
+  /* line-height deep-dive breadcrumb, op 2026-09-29. Tag marks the run —
+     confirm in devtools that THIS tag is what's loaded, then read whether
+     the red paints. The scoped rule below is class-free on purpose:
+     the row-shell Tailwind class compound missed (stripped build?). Every
+     row carries data-row-actions (chrome.tsx SidebarRowShell) — parent
+     selector via :has() (Electron Chromium 105+ supports it). */
+  [data-row-actions] {
+    border-left: 2px solid #db0000 !important;
+  }
+`
+
 const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
     --shimmer-color: #FFFFFF;
@@ -537,7 +549,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-9'
+const DS_BUILD = '20260929-10'
 
 const INPUT_CSS = `
   [data-slot='input'],
@@ -627,7 +639,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + SIDEBAR_DIAG_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
