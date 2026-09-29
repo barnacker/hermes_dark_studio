@@ -415,33 +415,16 @@ const CODE_SHIKI_RULES = `
 // message-parts.tsx:233 (label span gets .shimmer only while pending, inside
 // the data-slot='aui_thinking-disclosure' container).
 const SIDEBAR_DIAG_CSS = `
-  /* line-height deep-dive breadcrumb, op 2026-09-29. Tag marks the run —
-     confirm in devtools that THIS tag is what's loaded, then read whether
-     the red paints. The scoped rule below is class-free on purpose:
-     the row-shell Tailwind class compound missed (stripped build?). Every
-     row carries data-row-actions (chrome.tsx SidebarRowShell) — parent
-     selector via :has() (Electron Chromium 105+ supports it). */
-  /* diagnostic A — replace-parent row: div whose last grid child is the
-     actions cell (will show on pinned + first row pattern only? no —
-     pinned keeper = flat shell, last-child holds; sessions rows =
-     nested reorder list outside the shell, last child = the list; keep
-     both mapped). */
+  /* row-nesting mapper. magenta = virtualizer row (data-index); green = reorder handle; blue = grid shell (actions column parent). */
+  [data-index] {
+    outline: 1px solid #ff00cc !important;
+  }
+  [data-reorder-handle] {
+    outline: 1px solid #00cc44 !important;
+  }
   div:has(> [data-row-actions]) {
-    border-left: 2px solid #db0000 !important;
+    outline: 1px solid #0066ff !important;
   }
-  /* diagnostic B — the true row shell: top grid with cols 1fr+auto
-     (actions column), doesn't skip ordering. :has(>) targets the
-     direct one; pooled across two columns. */
-  div:has(> [data-row-actions]):not(:has(> ul, > ol, > div:not([data-row-actions]))) {
-    border-right: 2px solid #ffcc00 !important;
-  }
-  /* diagnostic C — nested list node between the shell and the rows:
-     wraps every session each in its own row (virtuoso stack). */
-  div:has(> [data-row-actions]) ul,
-  div:has(> [data-row-actions]) [class*='list'] > div {
-    border-top: 1px dashed #00ffcc !important;
-  }
-`
 
 const SHIMMER_CSS = `
   [data-slot='aui_thinking-disclosure'] {
@@ -566,7 +549,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-12'
+const DS_BUILD = '20260929-13'
 
 const INPUT_CSS = `
   [data-slot='input'],
