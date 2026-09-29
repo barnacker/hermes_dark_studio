@@ -415,12 +415,29 @@ const CODE_SHIKI_RULES = `
 // message-parts.tsx:233 (label span gets .shimmer only while pending, inside
 // the data-slot='aui_thinking-disclosure' container).
 const GEO_CSS = `
-  /* Global line-height, op 2026-09-30: 1.2 across the app (was ~1.5).
+  /* line-height x1.2, op 2026-09-30 — see the rules below for the 4 app-carrying sites.
      Inherited from <html> — one line the whole UI gets denser, incl.
      menus, settings, sidebar. Elements with their own explicit
      line-height rule (pre/code fences, table cells) hold. */
-  html {
-    line-height: 1.2;
+  /* line-height knobs x1.2, op 2026-09-30. The app pins line-height in 4
+     places (doesn't inherit from html — my earlier html rule was overridden
+     by all of them): :root --dt-line-height (app base 1.5), chat body
+     1.5 (aui_assistant-message-content), user message 1.3
+     (--human-msg-line-height), thinking description 1.45. Everything is
+     multiplied against its current value by 1.2. The code fences (row
+     leading constant, fixed 1.25rem row) are left as-is. */
+  :root {
+    --dt-line-height: calc(1.5 * 1.2);
+  }
+  [data-slot='aui_assistant-message-content'] {
+    line-height: calc(1.5 * 1.2) !important;
+  }
+  [data-slot='aui_user-message-root'],
+  [data-slot='aui_edit-composer-root'] {
+    --human-msg-line-height: calc(1.3 * 1.2);
+  }
+  .aui-md {
+    line-height: calc(1.45 * 1.2) !important;
   }
 `
 
@@ -544,7 +561,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260930-4'
+const DS_BUILD = '20260930-5'
 
 const INPUT_CSS = `
   [data-slot='input'],
