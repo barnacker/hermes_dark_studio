@@ -458,6 +458,20 @@ const SHIMMER_CSS = `
   .hover-marquee .hover-marquee-inner {
     font-size: 12px;
   }
+  /* Sidebar row height, op 2026-09-29: trim the shell min-height
+     (26px -> 20px). Real compound from chrome.tsx
+     SidebarRowShell: every session-row outer div carries exactly
+     min-h-[1.625rem] + grid grid-cols-[minmax(0,1fr)_auto]
+     items-stretch rounded-md + pr-2 — the four together identify the
+     shell div only (no other surface carries the full set; the
+     .arc-border arc row and the strip header rows keep their own
+     geometry). Inner cells stretch (items-stretch), labels center on
+     self-center, so 12px titles sit in the 20px band without
+     clipping (leading 1.35 -> 16.2px box). Icon leads stay 14px
+     (SIDEBAR_ROW_LEAD fixed grid, em-anchored). */
+  .min-\[1\.625rem\]\.grid\.grid-cols-\[minmax\(0,1fr\)_auto\]\.items-stretch\.rounded-md\.pr-2 {
+    min-height: 20px;
+  }
 `
 
 // Internal mechanics — the "not the deliverable" rows: tool mentions
@@ -522,7 +536,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260929-7'
+const DS_BUILD = '20260929-8'
 
 const INPUT_CSS = `
   [data-slot='input'],
