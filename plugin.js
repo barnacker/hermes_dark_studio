@@ -456,7 +456,7 @@ const SHIMMER_CSS = `
      the row to fit; nothing clips. Metadata + preview lines (10px,
      dim) untouched — only the bold title grows. */
   .hover-marquee .hover-marquee-inner {
-    font-size: 12px;
+    font-size: 14px;
   }
   /* Sidebar row height, op 2026-09-29: trim the shell min-height
      (26px -> 20px). Real compound from chrome.tsx
@@ -534,7 +534,7 @@ const INTERNAL_CSS = `
 // otherwise (styles identical on familiarity, only the build ID differs).
 // Keep in sync on every change that makes a "is my change live?" question
 // unanswerable.
-const DS_BUILD = '20260930-1'
+const DS_BUILD = '20260930-2'
 
 const INPUT_CSS = `
   [data-slot='input'],
