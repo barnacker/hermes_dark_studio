@@ -414,6 +414,20 @@ const CODE_SHIKI_RULES = `
 // motion params and every other shimmer consumer untouched. Verified:
 // message-parts.tsx:233 (label span gets .shimmer only while pending, inside
 // the data-slot='aui_thinking-disclosure' container).
+const COMPOSER_SIZE_CSS = `
+  /* Composer (edit box under the chat) text up, op 2026-09-30: 13 -> 15px.
+     Body paints 0.8125rem hard (styles.css:801) --- --dt-* vars not
+     carried; the composer inherits. Override on the root scope: body
+     (composer + placeholders), and the input nodes (rich input field +
+     caret). Placeholder ::before inherits (inherits from its element).
+     Button knobs and the suggestion strip are their own font-size
+     rules and are excluded. */
+  body,
+  [data-slot='composer-rich-input'] {
+    font-size: 15px !important;
+  }
+`
+
 const GEO_CSS = `
   /* line-height x1.2, op 2026-09-30 — see the rules below for the 4 app-carrying sites.
      Inherited from <html> — one line the whole UI gets denser, incl.
@@ -661,7 +675,7 @@ function injectComposerCss() {
   // file?" without reading through every rule.
   style.textContent =
     `/* dark-studio build ${DS_BUILD} */\n` +
-    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + GEO_CSS + SIDEBAR_TIGHT_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
+    COMPOSER_CSS + INPUT_CSS + MODEL_PILL_CSS + TIP_CSS + BUTTON_CSS + NAV_CSS + ROW_HOVER_CSS + NAV_PANEL_CSS + CODE_CSS + CODE_SHIKI_COMMENT + CODE_SHIKI_STRING + CODE_SHIKI_KEYWORD + CODE_SHIKI_CONSTANT + CODE_SHIKI_RULES + GEO_CSS + COMPOSER_SIZE_CSS + SIDEBAR_TIGHT_CSS + SHIMMER_CSS + INTERNAL_CSS + SIDEBAR_TOGGLE_CSS
 }
 
 // Minimal shape check (mirrors the app's validator) so a bad edit can't
