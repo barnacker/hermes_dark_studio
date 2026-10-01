@@ -75,8 +75,8 @@
  *       #0d1a32           →   scoped: settings active →   Settings section rows
  *                              row fill + border-off   (overlay nav); the
  *                              (NAV_PANEL_CSS)           boxed border is removed
- *   (installed font)    →   typography.fontSans /   →   UI face: Glass TTY VT220
- *                       + fontMono                  →   code face: Glass TTY VT220
+ *   (installed font)    →   typography.fontSans /   →   UI face: VT220 Nerd Font Mono
+ *                       + fontMono                  →   code face: VT220 Nerd Font Mono
  *                                                      →   (VT220 cut, single
  *                                                      →   weight — no Bold face;
  *                                                      →   synth where marked
@@ -150,12 +150,12 @@ const V = {
   // (28% of it).
   navSelected: '#0D1A32',   // --button_bg (darker blue of the button pair)
 
-  // Font — Glass TTY VT220 (svofski/glasstty): one face, single weight, no
-  // regular-bold ramp — the TTF's declared family name. UI and code slots
-  // share the family; the theme model carries no weight token, so marked
-  // .font-semibold/.font-bold ask the OS to synthesize.
-  font: '"Glass TTY VT220", "SF Mono", Menlo, system-ui, sans-serif',
-  fontMono: '"Glass TTY VT220", "SF Mono", "Courier New", monospace',
+  // Font — VT220 Nerd Font Mono (barnacker/vt220-nerd-font, primary; Consolas/
+  // Lucida Console / Andale Mono / Courier New are Windows-native fallbacks,
+  // so the UI keeps rendering if the NFM TTF isn't installed). Single
+  // weight; .font-semibold/.font-bold ask the OS to synthesize.
+  font: '"VT220 Nerd Font Mono", Consolas, "Lucida Console", "Andale Mono", "Courier New", system-ui, monospace',
+  fontMono: '"VT220 Nerd Font Mono", Consolas, "Lucida Console", "Andale Mono", "Courier New", monospace',
 }
 
 // ─── Terminal ANSI — the Dark Studio ramps used verbatim (middle ramp
