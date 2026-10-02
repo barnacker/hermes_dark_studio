@@ -138,17 +138,17 @@ const V = {
   // = a 5% accent-mix), so scoped CSS, same as the composer. default/secondary
   // labels are the theme foreground (--palette_buttonText = --text). The
   // destructive variant (Stop/error) is left to the red token.
-  buttonBg: '#0D1A32',      // --button_bg
-  buttonBgHover: '#152E55', // --button_bg_hover
+  buttonBg: '#152E55',      // --button_bg
+  buttonBgHover: '#0D1A32', // --button_bg_hover
 
   // Selected nav rows (sidebar sessions, file trees, messaging, MCP tab)
   // and the Settings section rows — --button_bg, the darker of the blue
-  // pair (hover stays --button_bg_hover #152E55). Rows paint the
+  // pair (hover stays --button_bg_hover #0D1A32). Rows paint the
   // token-mixed --ui-row-active-background var, so a scoped :root
   // override (NAV_CSS) repoints it; row classes and animations stay
   // untouched. The softer "open pane" band derives from the same var
   // (28% of it).
-  navSelected: '#0D1A32',   // --button_bg (darker blue of the button pair)
+  navSelected: '#152E55',   // --button_bg (darker blue of the button pair)
 
   // Font — VT220 Nerd Font Mono (barnacker/vt220-nerd-font, primary; Consolas/
   // Lucida Console / Andale Mono / Courier New are Windows-native fallbacks,
@@ -276,10 +276,10 @@ const NAV_CSS = `
 // --ui-row-hover-background, every other row/control hover reads
 // --chrome-action-hover (which aliases --ui-control-hover-background).
 // Both are token-mixed 4-8% accent washes by default, which reads as a dark
-// warm dip — repointing them at the light button-hover blue makes every
-// hover-in one coherent color, and hovering a NAVY SELECTED row now
-// LIGHTENS instead of dipping to dark (active #0D1A32 → hover #152E55,
-// the same blue pair as the filled buttons).
+// warm dip — repointing them at the button-bg-hover blue makes every
+// hover-in one coherent color, and hovering a lighter SELECTED row now
+// DIPS instead of lightening (active #152E55 → hover #0D1A32,
+// the same blue pair as the filled buttons, rest/hover inverted 2026-10-02).
 const ROW_HOVER_CSS = `
   :root {
     --ui-row-hover-background: ${V.buttonBgHover} !important;
